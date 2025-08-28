@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "displayName": "ShitSystem",
   "description": "Simple dependency injection system",
-  "unity": "2022.3.47f",
+  "unity": "2019.1",
   "dependencies": {},
   "author": {
     "name": "Senpap"
