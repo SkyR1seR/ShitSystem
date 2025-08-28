@@ -1,0 +1,12 @@
+{
+  "name": "com.Senpap.ShitSystem",
+  "version": "1.0.0",
+  "displayName": "ShitSystem",
+  "description": "Simple dependency injection system",
+  "unity": "2022.3.47f",
+  "dependencies": {
+ }
+  "author": {
+    "name": "Senpap"
+  }
+}
