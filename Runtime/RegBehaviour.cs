@@ -6,12 +6,21 @@ namespace ShitSystem
     public abstract class RegBehaviour : MonoBehaviour
     {
         private bool _registered;
-        
-        private void Awake()
+        private bool _initialized;
+
+        internal void OnInitialize()
         {
+            if (_initialized)
+                return;
+            _initialized = true;
             Injector.Register(this);
             _registered = true;
             Initialize();
+        }
+        
+        private void Awake()
+        {
+            OnInitialize();
         }
 
         protected virtual void OnDestroy()
