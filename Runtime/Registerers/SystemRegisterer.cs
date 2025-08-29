@@ -12,7 +12,7 @@ namespace ShitSystem.Registerers
     {
         private static readonly HashSet<RegSystem> RegisteredSystems = new ();
         
-        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.AfterSceneLoad)]
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnGameStart()
         {
             var findedAssembly = AppDomain.CurrentDomain.GetAssemblies();

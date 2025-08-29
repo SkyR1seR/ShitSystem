@@ -7,7 +7,7 @@ namespace ShitSystem.Registerers
     {
         private static readonly HashSet<RegScriptable> RegisteredScriptables = new();
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         private static void OnGameStart()
         {
             var findedScriptables = Resources.LoadAll<RegScriptable>("");
