@@ -9,28 +9,28 @@ namespace ShitSystem
     [UsedImplicitly]
     public static class Injector
     {
-        private static readonly Dictionary<Type, HashSet<object>> RegisteredObjects = new ();
-        private static readonly Dictionary<Type, HashSet<object>> RegisteredListeners = new();
+        private static readonly Dictionary<Type, List<object>> RegisteredObjects = new ();
+        private static readonly Dictionary<Type, List<object>> RegisteredListeners = new();
 
-        public static void Register<T>(T registeringObject)
+        public static void Register<T>([NotNull]T registeringObject)
         {
             RegisterObject(registeringObject);
             RegisterListener(registeringObject);
             RegisterInjections(registeringObject);
         }
 
-        public static void Unregister<T>(T unregisteringObject)
+        public static void Unregister<T>([NotNull]T unregisteringObject)
         {
             UnregisterObject(unregisteringObject);
             UnregisterListener(unregisteringObject);
         }
 
-        public static HashSet<T> GetListeners<T>()
+        public static List<T> GetListeners<T>()
         {
             if (!RegisteredListeners.TryGetValue(typeof(T), out var registeredListeners))
-                return new HashSet<T>();
+                return new List<T>();
             
-            HashSet<T> listeners = new();
+            List<T> listeners = new();
             
             foreach (var obj in registeredListeners)
                 listeners.Add((T)obj);
@@ -66,7 +66,7 @@ namespace ShitSystem
             {
                 if (field.GetCustomAttribute<Inject>() == null)
                     continue;
-                if (!RegisteredObjects.TryGetValue(field.FieldType, out HashSet<object> registeredObjects))
+                if (!RegisteredObjects.TryGetValue(field.FieldType, out List<object> registeredObjects))
                     continue;
                 
                 object first = null;
@@ -85,17 +85,17 @@ namespace ShitSystem
         {
             var type = registeringObject.GetType();
             
-            if (RegisteredObjects.TryGetValue(type, out HashSet<object> registeredObjects))
+            if (RegisteredObjects.TryGetValue(type, out List<object> registeredObjects))
                 registeredObjects.Add(registeringObject);
             else
-                RegisteredObjects.Add(type, new HashSet<object> { registeringObject });
+                RegisteredObjects.Add(type, new List<object> { registeringObject });
         }
         
         private static void UnregisterObject<T>(T unregisteringObject)
         {
             var type = unregisteringObject.GetType();
             
-            if (RegisteredObjects.TryGetValue(type, out HashSet<object> registeredObjects))
+            if (RegisteredObjects.TryGetValue(type, out List<object> registeredObjects))
                 registeredObjects.Remove(unregisteringObject);
         }
 
@@ -105,10 +105,10 @@ namespace ShitSystem
             {
                 if (!part.IsDefined(typeof(Listener), false))
                     continue;
-                if (RegisteredListeners.TryGetValue(part, out HashSet<object> registeredListeners))
+                if (RegisteredListeners.TryGetValue(part, out List<object> registeredListeners))
                     registeredListeners.Add(registeringObject);
                 else
-                    RegisteredListeners.Add(part, new HashSet<object> { registeringObject });
+                    RegisteredListeners.Add(part, new List<object> { registeringObject });
             }
         }
 
@@ -118,7 +118,7 @@ namespace ShitSystem
             {
                 if (!part.IsDefined(typeof(Listener), false))
                     continue;
-                if (RegisteredListeners.TryGetValue(part, out HashSet<object> registeredListeners))
+                if (RegisteredListeners.TryGetValue(part, out List<object> registeredListeners))
                     registeredListeners.Remove(unregisteringObject);
             }
         }

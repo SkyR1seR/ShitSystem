@@ -6,7 +6,7 @@ namespace ShitSystem.Registerers
 {
     public static class BehRegisterer
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Fire()
         {
             SceneManager.sceneLoaded += Init;

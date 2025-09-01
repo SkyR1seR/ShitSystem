@@ -10,10 +10,11 @@ namespace ShitSystem.Registerers
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         private static void OnGameStart()
         {
-            var findedScriptables = Resources.LoadAll<RegScriptable>("");
+            var findedScriptables = Resources.LoadAll<ScriptableObject>("");
             
             foreach (var scriptable in findedScriptables)
-                TryRegisterScriptable(scriptable);
+                if (scriptable is RegScriptable regScriptable)
+                    TryRegisterScriptable(regScriptable);
         }
         
         public static bool TryRegisterScriptable(RegScriptable scriptable)
