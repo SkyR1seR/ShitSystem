@@ -22,7 +22,7 @@ namespace ShitSystem.Registerers
                 {
                     foreach (var part in comp.GetType().GetInterfaces())
                     {
-                        if (!part.IsDefined(typeof(SelfRegister), false))
+                        if (!part.IsDefined(typeof(InitOnDisabled), false))
                             continue;
                         
                         comp.OnInitialize();
