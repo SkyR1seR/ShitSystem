@@ -56,6 +56,26 @@ namespace ShitSystem
                 action(item);
             }
         }
+        
+        public static bool TryGetObject<T>(out T type)
+        {
+            if (!RegisteredObjects.TryGetValue(typeof(T), out List<object> registeredObjects))
+            {
+                type = default(T);
+                return false;
+            }
+            
+            object first = null;
+                
+            foreach (var item in registeredObjects)
+            {
+                first = item;
+                break;
+            }
+            
+            type = (T)first;
+            return true;
+        }
 
         public static void RegisterInjections<T>(T registeringObject)
         {
