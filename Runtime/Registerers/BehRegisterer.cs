@@ -20,13 +20,8 @@ namespace ShitSystem.Registerers
                     comp.OnInitialize();
                 else
                 {
-                    foreach (var part in comp.GetType().GetInterfaces())
-                    {
-                        if (!part.IsDefined(typeof(InitOnDisabled), false))
-                            continue;
-                        
+                    if (comp.GetType().GetCustomAttributes(typeof(InitOnDisabled), false).Length > 0)
                         comp.OnInitialize();
-                    }
                 }
             }
         }
