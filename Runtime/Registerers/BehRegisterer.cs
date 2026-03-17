@@ -16,7 +16,7 @@ namespace ShitSystem.Registerers
         {
             foreach (var comp in Object.FindObjectsOfType<RegBehaviour>(true))
             {
-                if (comp.gameObject.activeSelf)
+                if (comp.gameObject.activeInHierarchy)
                     comp.OnInitialize();
                 else
                 {
